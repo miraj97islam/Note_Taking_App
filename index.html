@@ -5,20 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css" >
-    <title>Document</title>
+    <title>Keep Notes</title>
 </head>
 <body onload="onLoadBody()">
     <!-- <div id='outerDiv'> -->
         <div id="noteDiv">
-            <textarea id="title" placeholder="Title"></textarea>
-            <textarea id="note" placeholder="Note"></textarea>
+            <textarea id="title" class="resizeNone" placeholder="Title"></textarea>
+            <textarea id="note" class="resizeNone" placeholder="Note"></textarea>
         </div>
         
-        <div>
+        <div id="outer-copyNoteDiv">
         <div id="copyNoteDiv"></div>
         </div>
 
-        <div id="buttons">
+        <div id="buttonsDiv">
             <button id="buttonAdd">New</button>
             <button id="buttonSave">Save</button>
             <button id="buttonRemove">Delete</button>

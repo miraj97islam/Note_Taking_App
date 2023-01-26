@@ -3,9 +3,88 @@
     padding: 0;
 }
 
+
 body{
-    background-color: aliceblue;
+    background-image: url("wood.png");;
     display: flex;
     flex-direction: row;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: normal;
 }
 
+#noteDiv{
+    /* background-color: brown; */
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 500px;
+    margin: 20px;
+    margin-left: 50px;
+
+
+}
+
+#noteDiv #title{
+    height: 10%;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight:bold;
+    font-size:medium;
+}
+
+#noteDiv #note{
+    height: 90%;
+    padding: 10px;        
+    font-family:  "Helvetica Neue", Roboto, Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+ 
+}
+
+#outer-copyNoteDiv{
+    /* background-color:blueviolet; */
+    margin-top: 20px;
+    width: 20%;
+    height: 500px;
+    overflow-y:auto;
+    min-width: 60px;
+}
+
+
+
+.copyNoteDiv{
+    width: 96%;
+    padding-left: 5px;
+    padding-bottom: 5px;
+}
+
+
+#buttonsDiv{
+    /* background-color: blue; */
+    margin: 20px;
+    width: 30%;
+    display: block;
+}
+
+button{
+        height: 30px; 
+        width: 55px;  
+        border: none;
+        border-style:groove;
+        border-radius: 4px;
+        font-family: cursive;
+        font-style: oblique;
+        font-weight: bold;
+}
+
+#buttonReset{
+    width: 75px;
+    background-color: rgb(233, 75, 75);
+}
+
+.resizeNone{
+    resize: none;
+}

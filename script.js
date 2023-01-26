@@ -12,27 +12,34 @@ let buttonReset = document.getElementById('buttonReset');
 // local storage Data
 let ls_Data ; 
 
+// to track elements in copyNoteDiv
 let codeNumber = 0;
 
 let obj;
 let bookmarks = [];
 
 buttonAdd.addEventListener('click', addNewNote);
-buttonSave.addEventListener('click', saveNote);
+buttonSave.addEventListener('click', function(){
+                                                    if(title.value !== ''){
+                                                        saveNote();    
+                                                    }
+                                                });
 buttonRemove.addEventListener('click', removeNote);
 buttonReset.addEventListener('click', function(){
-                                        localStorage.removeItem('bookmarks');
-                                        copyNoteDiv.innerHTML = '';
-                                        title.value ='';
-                                        note.value = '';
-                                        codeNumber = 0;
-                                        bookmarks = [];
-                                    });
-buttonAdd
+                                        if(confirm(' Do you want to delete all notes ? ') === true){
+                                            localStorage.removeItem('bookmarks');
+                                            copyNoteDiv.innerHTML = '';
+                                            title.value ='';
+                                            note.value = '';
+                                            codeNumber = 0;
+                                            bookmarks = [];
+                                        };            
+                                });
+
 
 copyNoteDiv.addEventListener('click', copyNoteDivClick)
 
-
+//onClick add button
 function addNewNote(){
     title.value = '';
     note.value = '';
@@ -40,13 +47,15 @@ function addNewNote(){
 }
 
 
+//onClick save button
 function saveNote(){
 
+    //fetch local storage data
     ls_Data = JSON.parse(localStorage.getItem('bookmarks'));
     
     //if first note or new note 
     if(codeNumber === 0){
-        //if new note, else if first note 
+        //if new note 
         if(localStorage.length !== 0){
                     obj = {
                         title: title.value,
@@ -63,6 +72,7 @@ function saveNote(){
                     codeNumber = obj.code;
 
                     fetchBookmark();
+        //else if first note
         }else{
                     obj = {
                         title: title.value,
@@ -83,64 +93,54 @@ function saveNote(){
             ls_Data[codeNumber-1].note = note.value;
 
             localStorage.setItem('bookmarks', JSON.stringify(ls_Data));
-            
-           // location.reload();
-
-          let copyDivElement = document.getElementById(`${codeNumber}`);
-            copyDivElement.value =      title.value;
+ 
+           let copyDivElement = document.getElementById(`${codeNumber}`);
+           copyDivElement.value =      title.value;
     }
 
 };
 
 
+//onClick removeButton
 function removeNote(){
     let copyDivElement = document.getElementById(`${codeNumber}`);
 
     ls_Data = JSON.parse(localStorage.getItem('bookmarks'));
 
-    if(ls_Data.length > 1){
+    if(confirm(' Do you want to delete the note ? ') === true){
 
-    //delete ls_Data[codeNumber-1];
+        if(ls_Data.length > 1){
 
-    ls_Data.splice(codeNumber-1, 1);
+                ls_Data.splice(codeNumber-1, 1);
 
-    for(let i=0; i<ls_Data.length; i++){
-        ls_Data[i].code = i+1;
-    }
+                for(let i=0; i<ls_Data.length; i++){
+                    ls_Data[i].code = i+1;
+                }
 
-    bookmarks = [];
+                bookmarks = [];
 
-    bookmarks = ls_Data;
+                bookmarks = ls_Data;
 
-    localStorage.removeItem('bookmarks');
+                localStorage.removeItem('bookmarks');
 
-    localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+                localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
 
-    location. reload() ;
-    // ls_Data = JSON.parse(localStorage.getItem('bookmarks'));
+                location. reload() ;
 
-    // let title = ls_Data[ls_Data.length-1].title;
+    //track elements with their codeNumber as id
+        }else if(ls_Data.length === 1){
+                bookmarks = [];
 
-    //  codeNumber = ls_Data[ls_Data.length-1].code; 
+                localStorage.removeItem('bookmarks');
 
-    // //track elements with their code as id
-    // copyNoteDiv.innerHTML = null;
-    // copyNoteDiv.innerHTML += `<input id='${codeNumber}' value="${title}">`;  
-    
+                location. reload(); 
 
-    //track elements with their code as id
-
-}else if(ls_Data.length === 1){
-    bookmarks = [];
-
-    localStorage.removeItem('bookmarks');
-
-    location. reload(); 
-    
-}
-}
+                    };
+    };
+};
 
 
+//appear saved data in front end
 function fetchBookmark(){
    
     ls_Data = JSON.parse(localStorage.getItem('bookmarks'));
@@ -150,14 +150,20 @@ function fetchBookmark(){
     let codeNumber = ls_Data[ls_Data.length-1].code; 
 
     //track elements with their code as id
-    copyNoteDiv.innerHTML += `<input id='${codeNumber}' value="${title}">`;  
+    copyNoteDiv.innerHTML += `<input id='${codeNumber}' value="${title}" readonly>`;  
+
+    let element  = document.getElementById(codeNumber);
+
+    copyNoteDiv.classList.add('copyNoteDiv');
+    element.classList.add('copyNoteDiv'); 
+  
 
 };
 
+//when page loads
 function onLoadBody(){
     ls_Data = JSON.parse(localStorage.getItem('bookmarks'));
     let last_ls_Data_Position ;
-    let last_ls_Data;
     let title;
 
     if(localStorage.length !=0){
@@ -166,14 +172,20 @@ function onLoadBody(){
 
             title = ls_Data[last_ls_Data_Position].title
 
-            copyNoteDiv.innerHTML += `<input id='${last_ls_Data_Position+1}' value="${title}">`;  
+            copyNoteDiv.innerHTML += `<input id='${last_ls_Data_Position+1}' value="${title}" readonly >`; 
+            
+            let element  = document.getElementById(last_ls_Data_Position+1);
+
+            
+           copyNoteDiv.classList.add('copyNoteDiv');
+            element.classList.add('copyNoteDiv'); 
 
         };
     };
 };
 
 
-//maintain which element will update if the not or title is updated
+//maintain which element in local storage will update after onClick saveButton, if the note or title changed
 function copyNoteDivClick(e){
     ls_Data = JSON.parse(localStorage.getItem('bookmarks'));
     
@@ -182,7 +194,7 @@ function copyNoteDivClick(e){
     title.value = ls_Data[codeNumber-1].title;
     note.value = ls_Data[codeNumber-1].note;
     
-}
+};
 
 
 
