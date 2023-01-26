@@ -13,16 +13,14 @@ body{
     font-weight: normal;
 }
 
+
 #noteDiv{
-    /* background-color: brown; */
     display: flex;
     flex-direction: column;
     width: 50%;
     height: 500px;
     margin: 20px;
     margin-left: 50px;
-
-
 }
 
 #noteDiv #title{
@@ -33,6 +31,7 @@ body{
     font-style: normal;
     font-weight:bold;
     font-size:medium;
+    resize: none;
 }
 
 #noteDiv #note{
@@ -41,11 +40,10 @@ body{
     font-family:  "Helvetica Neue", Roboto, Helvetica, sans-serif;
     font-size: 15px;
     font-weight: 300;
- 
+    resize: none;
 }
 
 #outer-copyNoteDiv{
-    /* background-color:blueviolet; */
     margin-top: 20px;
     width: 20%;
     height: 500px;
@@ -54,16 +52,16 @@ body{
 }
 
 
-
 .copyNoteDiv{
     width: 96%;
-    padding-left: 5px;
-    padding-bottom: 5px;
+     padding-left: 5px;
+     padding-bottom: 5px;
+    margin-bottom: 2px;
+    font-weight: bold;
 }
 
 
 #buttonsDiv{
-    /* background-color: blue; */
     margin: 20px;
     width: 30%;
     display: block;
@@ -80,11 +78,21 @@ button{
         font-weight: bold;
 }
 
+button:hover{
+    background-color:darkslategray;
+    color:  #f1f1f1
+}
+
+#buttonRemove:hover{
+    background-color:rgb(233, 75, 75) ;
+}
+
+
+button:active {
+    transform: translateY(1px);
+  }
+
 #buttonReset{
     width: 75px;
     background-color: rgb(233, 75, 75);
-}
-
-.resizeNone{
-    resize: none;
 }

@@ -18,11 +18,13 @@ let codeNumber = 0;
 let obj;
 let bookmarks = [];
 
+title.focus();
+
 buttonAdd.addEventListener('click', addNewNote);
 buttonSave.addEventListener('click', function(){
                                                     if(title.value !== ''){
                                                         saveNote();    
-                                                    }
+                                                    };
                                                 });
 buttonRemove.addEventListener('click', removeNote);
 buttonReset.addEventListener('click', function(){
@@ -34,23 +36,25 @@ buttonReset.addEventListener('click', function(){
                                             codeNumber = 0;
                                             bookmarks = [];
                                         };            
-                                });
+                                    });
 
+copyNoteDiv.addEventListener('click', copyNoteDivClick);
 
-copyNoteDiv.addEventListener('click', copyNoteDivClick)
 
 //onClick add button
 function addNewNote(){
     title.value = '';
     note.value = '';
     codeNumber= 0;
+
+    title.focus();
 }
 
 
 //onClick save button
 function saveNote(){
 
-    //fetch local storage data
+    //parse local storage data
     ls_Data = JSON.parse(localStorage.getItem('bookmarks'));
     
     //if first note or new note 
@@ -87,23 +91,21 @@ function saveNote(){
                     codeNumber = obj.code;
 
                     fetchBookmark();
-        };
+             };
     }else{
             ls_Data[codeNumber-1].title = title.value;
             ls_Data[codeNumber-1].note = note.value;
 
             localStorage.setItem('bookmarks', JSON.stringify(ls_Data));
  
-           let copyDivElement = document.getElementById(`${codeNumber}`);
-           copyDivElement.value =      title.value;
-    }
-
+            let copyDivElement = document.getElementById(`${codeNumber}`);
+            copyDivElement.value =      title.value;
+    };
 };
 
 
 //onClick removeButton
 function removeNote(){
-    let copyDivElement = document.getElementById(`${codeNumber}`);
 
     ls_Data = JSON.parse(localStorage.getItem('bookmarks'));
 
@@ -127,7 +129,6 @@ function removeNote(){
 
                 location. reload() ;
 
-    //track elements with their codeNumber as id
         }else if(ls_Data.length === 1){
                 bookmarks = [];
 
@@ -135,12 +136,12 @@ function removeNote(){
 
                 location. reload(); 
 
-                    };
+         };
     };
 };
 
 
-//appear saved data in front end
+//appearing saved data in front end
 function fetchBookmark(){
    
     ls_Data = JSON.parse(localStorage.getItem('bookmarks'));
@@ -156,9 +157,9 @@ function fetchBookmark(){
 
     copyNoteDiv.classList.add('copyNoteDiv');
     element.classList.add('copyNoteDiv'); 
-  
 
 };
+
 
 //when page loads
 function onLoadBody(){
@@ -175,11 +176,9 @@ function onLoadBody(){
             copyNoteDiv.innerHTML += `<input id='${last_ls_Data_Position+1}' value="${title}" readonly >`; 
             
             let element  = document.getElementById(last_ls_Data_Position+1);
-
             
-           copyNoteDiv.classList.add('copyNoteDiv');
+            copyNoteDiv.classList.add('copyNoteDiv');
             element.classList.add('copyNoteDiv'); 
-
         };
     };
 };
@@ -193,8 +192,4 @@ function copyNoteDivClick(e){
 
     title.value = ls_Data[codeNumber-1].title;
     note.value = ls_Data[codeNumber-1].note;
-    
 };
-
-
-
